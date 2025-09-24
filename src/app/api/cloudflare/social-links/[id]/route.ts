@@ -60,11 +60,11 @@ export async function PUT(
   try {
     const id = parseInt(params.id);
     const body = await request.json();
-    const { platform, url, icon, is_available } = body;
+    const { platform, url, icon } = body;
 
     await executeSqlOnD1(
-      'UPDATE social_links SET platform = ?, url = ?, icon = ?, is_available = ? WHERE id = ?',
-      [platform, url, icon || '🔗', is_available ? 1 : 0, id]
+      'UPDATE social_links SET platform = ?, url = ?, icon = ? WHERE id = ?',
+      [platform, url, icon || '🔗', id]
     );
 
     // Récupérer le lien social mis à jour
