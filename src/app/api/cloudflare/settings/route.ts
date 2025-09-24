@@ -40,17 +40,17 @@ export async function GET() {
       // Mapper les champs D1 vers le format attendu par le frontend
       const mappedSettings = {
         ...settings,
-        backgroundImage: settings.background_image,
-        backgroundOpacity: settings.background_opacity || 20,
-        backgroundBlur: settings.background_blur || 5,
-        shopTitle: settings.shop_title || 'MEXICAIN',
-        shopName: settings.shop_title || 'MEXICAIN',
-        infoContent: settings.info_content,
-        contactContent: settings.contact_content,
-        whatsappLink: settings.whatsapp_link || '',
-        whatsappNumber: settings.whatsapp_number || '',
-        scrollingText: settings.scrolling_text || '',
-        titleStyle: settings.theme_color || 'glow'
+        backgroundImage: settings.backgroundImage,
+        backgroundOpacity: settings.backgroundOpacity || 20,
+        backgroundBlur: settings.backgroundBlur || 5,
+        shopTitle: settings.shopName || 'MEXICAIN',
+        shopName: settings.shopName || 'MEXICAIN',
+        infoContent: settings.shopDescription,
+        contactContent: settings.contactEmail,
+        whatsappLink: '',
+        whatsappNumber: settings.contactPhone || '',
+        scrollingText: '',
+        titleStyle: 'glow'
       };
       
       return NextResponse.json(mappedSettings);
@@ -58,17 +58,14 @@ export async function GET() {
       // Retourner des paramètres par défaut MEXICAIN
       const defaultSettings = {
         id: 1,
-        shop_name: 'MEXICAIN',
-        background_image: 'https://pub-b38679a01a274648827751df94818418.r2.dev/images/background-oglegacy.jpeg',
-        background_opacity: 20,
-        background_blur: 5,
-        info_content: 'Bienvenue chez MEXICAIN - Votre boutique premium',
-        contact_content: 'Contactez MEXICAIN pour toute question',
+        shopName: 'MEXICAIN',
         backgroundImage: 'https://pub-b38679a01a274648827751df94818418.r2.dev/images/background-oglegacy.jpeg',
         backgroundOpacity: 20,
         backgroundBlur: 5,
-        shopTitle: 'MEXICAIN',
-        shopName: 'MEXICAIN'
+        shopDescription: 'Bienvenue chez MEXICAIN - Votre boutique premium',
+        contactEmail: 'Contactez MEXICAIN pour toute question',
+        contactPhone: '',
+        shopTitle: 'MEXICAIN'
       };
       
       return NextResponse.json(defaultSettings);
@@ -135,49 +132,39 @@ export async function PUT(request: NextRequest) {
       // UPDATE
       await executeSqlOnD1(`
         UPDATE settings SET 
-          background_image = ?, 
-          background_opacity = ?, 
-          background_blur = ?,
-          info_content = ?,
-          contact_content = ?,
-          shop_title = ?,
-          whatsapp_link = ?,
-          whatsapp_number = ?,
-          scrolling_text = ?,
-          theme_color = ?
+          backgroundImage = ?, 
+          backgroundOpacity = ?, 
+          backgroundBlur = ?,
+          shopName = ?,
+          shopDescription = ?,
+          contactEmail = ?,
+          contactPhone = ?
         WHERE id = 1
       `, [
         finalBackgroundImage,
         finalBackgroundOpacity,
         finalBackgroundBlur,
+        finalShopTitle,
         finalInfoContent,
         finalContactContent,
-        finalShopTitle,
-        finalWhatsappLink,
-        finalWhatsappNumber,
-        finalScrollingText,
-        finalThemeColor
+        finalWhatsappNumber
       ]);
     } else {
       // INSERT
       await executeSqlOnD1(`
         INSERT INTO settings (
-          id, background_image, background_opacity, background_blur, 
-          info_content, contact_content, shop_title, whatsapp_link,
-          whatsapp_number, scrolling_text, theme_color
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          id, backgroundImage, backgroundOpacity, backgroundBlur, 
+          shopName, shopDescription, contactEmail, contactPhone
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `, [
         1,
         finalBackgroundImage,
         finalBackgroundOpacity,
         finalBackgroundBlur,
+        finalShopTitle,
         finalInfoContent,
         finalContactContent,
-        finalShopTitle,
-        finalWhatsappLink,
-        finalWhatsappNumber,
-        finalScrollingText,
-        finalThemeColor
+        finalWhatsappNumber
       ]);
     }
 
@@ -189,11 +176,11 @@ export async function PUT(request: NextRequest) {
 
     const mappedSettings = {
       ...settings,
-      backgroundImage: settings.background_image,
-      backgroundOpacity: settings.background_opacity,
-      backgroundBlur: settings.background_blur,
-      shopTitle: 'MEXICAIN',
-      shopName: 'MEXICAIN'
+      backgroundImage: settings.backgroundImage,
+      backgroundOpacity: settings.backgroundOpacity,
+      backgroundBlur: settings.backgroundBlur,
+      shopTitle: settings.shopName || 'MEXICAIN',
+      shopName: settings.shopName || 'MEXICAIN'
     };
 
     return NextResponse.json(mappedSettings);
