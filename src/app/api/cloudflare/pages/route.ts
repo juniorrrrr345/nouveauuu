@@ -50,7 +50,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { slug, title, content = '', is_active = true } = body;
+    const { slug, title, content = '', is_published = true } = body;
 
     if (!slug || !title) {
       return NextResponse.json(
@@ -60,8 +60,8 @@ export async function POST(request: Request) {
     }
 
     await executeSqlOnD1(
-      'INSERT INTO pages (slug, title, content, is_active) VALUES (?, ?, ?, ?)',
-      [slug, title, content, is_active ? 1 : 0]
+      'INSERT INTO pages (slug, title, content, is_published) VALUES (?, ?, ?, ?)',
+      [slug, title, content, is_published ? 1 : 0]
     );
 
     console.log('✅ Page créée avec succès');
