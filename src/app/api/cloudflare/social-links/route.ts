@@ -76,7 +76,7 @@ export async function POST(request: Request) {
     
     const data = await response.json();
     
-    if (data.success) {
+    if (data.result?.[0]?.success) {
       return NextResponse.json({ success: true, message: 'Lien social créé avec succès' }, { status: 201 });
     } else {
       throw new Error('Erreur D1');
