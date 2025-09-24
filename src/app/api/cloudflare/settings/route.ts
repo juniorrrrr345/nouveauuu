@@ -47,10 +47,10 @@ export async function GET() {
         shopName: settings.shopName || 'MEXICAIN',
         infoContent: settings.shopDescription,
         contactContent: settings.contactEmail,
-        whatsappLink: '',
+        whatsappLink: settings.whatsappLink || '',
         whatsappNumber: settings.contactPhone || '',
-        scrollingText: '',
-        titleStyle: 'glow'
+        scrollingText: settings.scrollingText || '',
+        titleStyle: settings.titleStyle || 'glow'
       };
       
       return NextResponse.json(mappedSettings);
@@ -138,7 +138,10 @@ export async function PUT(request: NextRequest) {
           shopName = ?,
           shopDescription = ?,
           contactEmail = ?,
-          contactPhone = ?
+          contactPhone = ?,
+          scrollingText = ?,
+          titleStyle = ?,
+          whatsappLink = ?
         WHERE id = 1
       `, [
         finalBackgroundImage,
@@ -147,15 +150,19 @@ export async function PUT(request: NextRequest) {
         finalShopTitle,
         finalInfoContent,
         finalContactContent,
-        finalWhatsappNumber
+        finalWhatsappNumber,
+        finalScrollingText,
+        finalThemeColor,
+        finalWhatsappLink
       ]);
     } else {
       // INSERT
       await executeSqlOnD1(`
         INSERT INTO settings (
           id, backgroundImage, backgroundOpacity, backgroundBlur, 
-          shopName, shopDescription, contactEmail, contactPhone
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          shopName, shopDescription, contactEmail, contactPhone,
+          scrollingText, titleStyle, whatsappLink
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `, [
         1,
         finalBackgroundImage,
@@ -164,7 +171,10 @@ export async function PUT(request: NextRequest) {
         finalShopTitle,
         finalInfoContent,
         finalContactContent,
-        finalWhatsappNumber
+        finalWhatsappNumber,
+        finalScrollingText,
+        finalThemeColor,
+        finalWhatsappLink
       ]);
     }
 
@@ -180,7 +190,10 @@ export async function PUT(request: NextRequest) {
       backgroundOpacity: settings.backgroundOpacity,
       backgroundBlur: settings.backgroundBlur,
       shopTitle: settings.shopName || 'MEXICAIN',
-      shopName: settings.shopName || 'MEXICAIN'
+      shopName: settings.shopName || 'MEXICAIN',
+      scrollingText: settings.scrollingText || '',
+      titleStyle: settings.titleStyle || 'glow',
+      whatsappLink: settings.whatsappLink || ''
     };
 
     return NextResponse.json(mappedSettings);

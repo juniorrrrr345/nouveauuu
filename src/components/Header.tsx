@@ -29,12 +29,12 @@ export default function Header() {
           console.log('📝 Header - Settings chargés:', data);
           
           setSettings({
-            shopTitle: data.shop_name || 'CALITEK',
+            shopTitle: data.shopName || data.shop_name || 'MEXICAIN',
             shopSubtitle: '', // Pas de sous-titre
-            scrollingText: data.scrolling_text || '',
+            scrollingText: data.scrollingText || data.scrolling_text || '',
             bannerText: '', // Pas de bandeau contact dans header
-            titleStyle: data.theme_color || 'glow',
-            backgroundImage: data.background_image || ''
+            titleStyle: data.titleStyle || data.theme_color || 'glow',
+            backgroundImage: data.backgroundImage || data.background_image || ''
           });
           setIsLoaded(true);
         }
@@ -133,13 +133,13 @@ export default function Header() {
               {settings.backgroundImage ? (
                 <img 
                   src={settings.backgroundImage} 
-                  alt="CALITEK" 
+                  alt={settings.shopTitle || 'MEXICAIN'} 
                   className="h-12 sm:h-16 md:h-20 w-auto rounded-lg"
                   style={{ filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' }}
                 />
               ) : (
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white">
-                  CALITEK
+                <h1 className={getTitleClass()}>
+                  {settings.shopTitle || 'MEXICAIN'}
                 </h1>
               )}
 
