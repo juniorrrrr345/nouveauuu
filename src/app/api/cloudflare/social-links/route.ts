@@ -16,7 +16,7 @@ export async function GET() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        sql: 'SELECT * FROM social_links WHERE is_available = 1 ORDER BY created_at ASC'
+        sql: 'SELECT * FROM social_links ORDER BY created_at ASC'
       })
     });
     
@@ -45,7 +45,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { platform, url, icon = '🔗', is_available = true } = body;
+    const { platform, url, icon = '🔗' } = body;
 
     if (!platform || !url) {
       return NextResponse.json(
@@ -67,8 +67,8 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        sql: 'INSERT INTO social_links (platform, url, icon, is_available) VALUES (?, ?, ?, ?)',
-        params: [platform, url, icon, is_available ? 1 : 0]
+        sql: 'INSERT INTO social_links (platform, url, icon) VALUES (?, ?, ?)',
+        params: [platform, url, icon]
       })
     });
     
