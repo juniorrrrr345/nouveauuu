@@ -52,13 +52,7 @@ export async function PUT(
   try {
     const data = await request.json();
     
-    const {
-      name,
-      description,
-      location,
-      image,
-      isActive = true,
-    } = data;
+    const { name, isActive = true } = data;
 
     if (!name) {
       return NextResponse.json(
@@ -71,9 +65,6 @@ export async function PUT(
       where: { id: params.id },
       data: {
         name,
-        description,
-        location,
-        image,
         isActive,
       },
     });

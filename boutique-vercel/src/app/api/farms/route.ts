@@ -33,12 +33,7 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
     
-    const {
-      name,
-      description,
-      location,
-      image,
-    } = data;
+    const { name } = data;
 
     if (!name) {
       return NextResponse.json(
@@ -50,9 +45,6 @@ export async function POST(request: NextRequest) {
     const farm = await prisma.farm.create({
       data: {
         name,
-        description,
-        location,
-        image,
       },
     });
 
