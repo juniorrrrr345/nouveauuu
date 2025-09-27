@@ -34,12 +34,7 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
     
-    const {
-      name,
-      description,
-      image,
-      order = 0,
-    } = data;
+    const { name } = data;
 
     if (!name) {
       return NextResponse.json(
@@ -51,9 +46,6 @@ export async function POST(request: NextRequest) {
     const category = await prisma.category.create({
       data: {
         name,
-        description,
-        image,
-        order,
       },
     });
 

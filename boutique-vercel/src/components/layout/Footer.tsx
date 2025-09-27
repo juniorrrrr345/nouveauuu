@@ -80,48 +80,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
-          {/* Section INFO */}
+          {/* Section INFO - Simplifiée */}
           <div>
             <h3 className="text-xl font-bold mb-6 text-green-400">INFO</h3>
             <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <FiMapPin className="text-green-400 mt-1" size={20} />
-                <div>
-                  <p className="font-medium">Adresse</p>
-                  <p className="text-gray-300 text-sm">
-                    {getConfigValue('address', 'Votre adresse ici')}
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-3">
-                <FiPhone className="text-green-400 mt-1" size={20} />
-                <div>
-                  <p className="font-medium">Téléphone</p>
-                  <p className="text-gray-300 text-sm">
-                    {getConfigValue('phone', 'Votre numéro de téléphone')}
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-3">
-                <FiMail className="text-green-400 mt-1" size={20} />
-                <div>
-                  <p className="font-medium">Email</p>
-                  <p className="text-gray-300 text-sm">
-                    {getConfigValue('email', 'contact@boutique.com')}
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-3">
-                <FiClock className="text-green-400 mt-1" size={20} />
-                <div>
-                  <p className="font-medium">Horaires</p>
-                  <p className="text-gray-300 text-sm">
-                    {getConfigValue('schedule', 'Lun-Ven: 9h-18h')}
-                  </p>
-                </div>
+              <div className="text-gray-300">
+                <p className="font-medium mb-2">{getConfigValue('site_name', 'Boutique')}</p>
+                <p className="text-sm">{getConfigValue('site_description', 'Découvrez nos produits frais de qualité')}</p>
               </div>
             </div>
           </div>
