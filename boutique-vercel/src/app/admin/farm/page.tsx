@@ -148,19 +148,9 @@ export default function FarmPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
             {farms.map((farm) => (
               <div key={farm.id} className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                {/* Image de la ferme */}
-                <div className="h-48 bg-gray-200 rounded-t-lg overflow-hidden">
-                  {farm.image ? (
-                    <img
-                      src={farm.image}
-                      alt={farm.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-400">
-                      <span className="text-4xl">🚜</span>
-                    </div>
-                  )}
+                {/* Header simple */}
+                <div className="h-16 bg-gray-100 rounded-t-lg flex items-center justify-center">
+                  <span className="text-2xl">🚜</span>
                 </div>
 
                 {/* Contenu */}
@@ -185,20 +175,6 @@ export default function FarmPage() {
                     </div>
                   </div>
 
-                  {/* Localisation */}
-                  {farm.location && (
-                    <div className="flex items-center text-sm text-gray-600 mb-2">
-                      <FiMapPin size={14} className="mr-1" />
-                      {farm.location}
-                    </div>
-                  )}
-
-                  {/* Description */}
-                  {farm.description && (
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-3">
-                      {farm.description}
-                    </p>
-                  )}
 
                   {/* Statistiques */}
                   <div className="flex items-center justify-between text-sm">

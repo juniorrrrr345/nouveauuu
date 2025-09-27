@@ -16,7 +16,6 @@ export default function ProductsPage() {
     description: '',
     categoryId: '',
     farmId: '',
-    stock: 0,
     prices: [{ label: '', price: 0, originalPrice: 0, isDefault: true }],
     images: [] as string[],
     videos: [] as string[],
@@ -106,7 +105,6 @@ export default function ProductsPage() {
       description: product.description || '',
       categoryId: product.categoryId,
       farmId: product.farmId || '',
-      stock: product.stock,
       prices: product.prices.map(p => ({
         label: p.label,
         price: p.price,
@@ -190,7 +188,6 @@ export default function ProductsPage() {
       description: '',
       categoryId: '',
       farmId: '',
-      stock: 0,
       prices: [{ label: '', price: 0, originalPrice: 0, isDefault: true }],
       images: [],
       videos: [],
@@ -242,9 +239,6 @@ export default function ProductsPage() {
                   Ferme
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Stock
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Prix
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -279,17 +273,6 @@ export default function ProductsPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {product.farm?.name || 'N/A'}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      product.stock > 5 
-                        ? 'bg-green-100 text-green-800'
-                        : product.stock > 0
-                        ? 'bg-yellow-100 text-yellow-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {product.stock}
-                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {product.prices.length > 0 && (
@@ -355,18 +338,6 @@ export default function ProductsPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Stock
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={formData.stock}
-                    onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
-                  />
-                </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
