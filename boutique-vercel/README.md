@@ -2,49 +2,55 @@
 
 Une boutique en ligne moderne pour vendre des produits frais directement des fermes partenaires.
 
-## 🚀 Déploiement sur Vercel
+## 🚀 Configuration Optimale : Vercel + Cloudflare
 
-### 1. Configuration de la Base de Données PostgreSQL
+### Architecture Recommandée
+- **🏠 Vercel** : Hébergement de l'application Next.js
+- **🗄️ Vercel Postgres** : Base de données (stable et performant)
+- **☁️ Cloudflare R2** : Stockage d'images et vidéos (gratuit et rapide)
 
-Pour résoudre les erreurs 500 liées à la base de données, vous devez configurer une base de données PostgreSQL sur Vercel :
+## 📋 Configuration Étape par Étape
 
-#### Option A: Vercel Postgres (Recommandé)
+### 1. Base de Données - Vercel Postgres
+
 1. Allez sur [Vercel Dashboard](https://vercel.com/dashboard)
 2. Sélectionnez votre projet
 3. Allez dans l'onglet "Storage"
 4. Cliquez sur "Create Database" → "Postgres"
 5. Donnez un nom à votre base de données (ex: `boutique-db`)
 6. Créez la base de données
+7. **Vercel génère automatiquement `DATABASE_URL`** ✅
 
-#### Option B: Base de Données Externe
-Vous pouvez utiliser :
-- **Supabase** (gratuit jusqu'à 500MB)
-- **Railway** (gratuit jusqu'à 1GB)
-- **Neon** (gratuit jusqu'à 3GB)
-- **PlanetScale** (gratuit jusqu'à 5GB)
+### 2. Stockage - Cloudflare R2
 
-### 2. Variables d'Environnement sur Vercel
+1. Allez sur [Cloudflare Dashboard](https://dash.cloudflare.com/)
+2. Allez dans "R2 Object Storage"
+3. Créez un nouveau bucket (ex: `boutique-images`)
+4. Configurez les permissions publiques pour les images
+5. Récupérez vos clés API dans "Manage R2 API Tokens"
+
+### 3. Variables d'Environnement sur Vercel
 
 Ajoutez ces variables dans votre projet Vercel (Settings → Environment Variables) :
 
 ```env
-# Base de données (obtenue automatiquement avec Vercel Postgres)
-DATABASE_URL="postgresql://..."
+# Base de données (générée automatiquement par Vercel Postgres)
+DATABASE_URL="postgresql://..." # ← Ajoutée automatiquement
 
-# Cloudflare R2 (pour le stockage de fichiers)
-CLOUDFLARE_ACCOUNT_ID="your_account_id"
-CLOUDFLARE_ACCESS_KEY_ID="your_access_key_id"
-CLOUDFLARE_SECRET_ACCESS_KEY="your_secret_access_key"
-CLOUDFLARE_BUCKET_NAME="your_bucket_name"
-CLOUDFLARE_PUBLIC_URL="https://your-public-url.com"
+# Cloudflare R2 - Stockage d'images et vidéos
+CLOUDFLARE_ACCOUNT_ID="votre_account_id"
+CLOUDFLARE_ACCESS_KEY_ID="votre_access_key_id"
+CLOUDFLARE_SECRET_ACCESS_KEY="votre_secret_access_key"
+CLOUDFLARE_BUCKET_NAME="boutique-images"
+CLOUDFLARE_PUBLIC_URL="https://pub-xxx.r2.dev"
 
 # Next.js
-NEXTAUTH_SECRET="your-secret-key-here"
+NEXTAUTH_SECRET="votre-secret-key-ici"
 ```
 
-### 3. Initialisation de la Base de Données
+### 4. Initialisation de la Base de Données
 
-Après avoir configuré PostgreSQL, vous devez :
+Après avoir configuré Vercel Postgres :
 
 1. **Créer les tables** (fait automatiquement par Prisma)
 2. **Ajouter des données d'exemple** :
@@ -56,6 +62,23 @@ npm run db:setup
 # Ou manuellement sur Vercel
 # Le seed se fait automatiquement au premier déploiement
 ```
+
+### 5. Avantages de cette Configuration
+
+**💰 Coût Optimisé :**
+- Vercel : Gratuit jusqu'à 100GB/mois de bande passante
+- Vercel Postgres : Gratuit jusqu'à 1GB de stockage
+- Cloudflare R2 : Gratuit jusqu'à 10GB de stockage + 1M de requêtes/mois
+
+**⚡ Performance :**
+- Vercel : Edge functions ultra-rapides
+- Cloudflare R2 : CDN mondial pour les images
+- PostgreSQL : Base de données stable et performante
+
+**🔧 Simplicité :**
+- Déploiement automatique depuis GitHub
+- Variables d'environnement gérées par Vercel
+- Interface d'administration intégrée
 
 ## 🛠️ Développement Local
 
