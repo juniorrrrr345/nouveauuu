@@ -30,20 +30,9 @@ export default function Header() {
               <span className="text-2xl font-bold text-green-600">Boutique</span>
             </Link>
 
-            {/* Navigation Desktop */}
+            {/* Navigation Desktop - Simple et épuré */}
             <nav className="hidden md:flex space-x-8">
-              <Link 
-                href="/categories" 
-                className="text-gray-700 hover:text-green-600 font-medium transition-colors"
-              >
-                Catégories
-              </Link>
-              <Link 
-                href="/farm" 
-                className="text-gray-700 hover:text-green-600 font-medium transition-colors"
-              >
-                Farm
-              </Link>
+              {/* Navigation simplifiée - pas de liens complexes */}
             </nav>
 
             {/* Panier et Menu Mobile */}
@@ -72,24 +61,11 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Menu Mobile */}
+        {/* Menu Mobile - Simplifié */}
         {isMenuOpen && (
           <div className="md:hidden bg-white border-t">
             <div className="px-4 py-2 space-y-2">
-              <Link
-                href="/categories"
-                className="block py-2 text-gray-700 hover:text-green-600 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Catégories
-              </Link>
-              <Link
-                href="/farm"
-                className="block py-2 text-gray-700 hover:text-green-600 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Farm
-              </Link>
+              {/* Menu mobile simplifié */}
             </div>
           </div>
         )}
