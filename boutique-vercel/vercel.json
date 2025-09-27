@@ -9,5 +9,10 @@
     "CLOUDFLARE_BUCKET_NAME": "@cloudflare_bucket_name",
     "CLOUDFLARE_PUBLIC_URL": "@cloudflare_public_url",
     "NEXTAUTH_SECRET": "@nextauth_secret"
+  },
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "runtime": "nodejs18.x"
+    }
   }
 }
