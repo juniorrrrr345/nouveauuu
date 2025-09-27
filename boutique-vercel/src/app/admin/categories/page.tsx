@@ -160,12 +160,6 @@ export default function CategoriesPage() {
                   Catégorie
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Description
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Ordre
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Produits
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -246,88 +240,19 @@ export default function CategoriesPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Nom de la catégorie *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Ordre d'affichage
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={formData.order}
-                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
-                  />
-                </div>
-              </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Description
+                  Nom de la catégorie *
                 </label>
-                <textarea
-                  rows={3}
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
                 />
               </div>
 
-              {/* Image */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Image de la catégorie
-                </label>
-                
-                {formData.image ? (
-                  <div className="mb-4">
-                    <div className="relative inline-block">
-                      <img
-                        src={formData.image}
-                        alt="Aperçu"
-                        className="h-32 w-32 object-cover rounded-lg"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setFormData({ ...formData, image: '' })}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
-                      >
-                        <FiX size={12} />
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
-                    <label className="cursor-pointer">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                      />
-                      <div className="text-center">
-                        <FiUpload className="mx-auto h-12 w-12 text-gray-400" />
-                        <span className="mt-2 block text-sm font-medium text-gray-900">
-                          Cliquer pour ajouter une image
-                        </span>
-                      </div>
-                    </label>
-                  </div>
-                )}
-              </div>
 
               {/* Actions */}
               <div className="flex justify-end space-x-4">
