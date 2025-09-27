@@ -3,6 +3,7 @@
   "installCommand": "npm install",
   "env": {
     "DATABASE_URL": "@database_url",
+    "POSTGRES_PRISMA_URL": "@postgres_prisma_url",
     "CLOUDFLARE_ACCOUNT_ID": "@cloudflare_account_id",
     "CLOUDFLARE_ACCESS_KEY_ID": "@cloudflare_access_key_id",
     "CLOUDFLARE_SECRET_ACCESS_KEY": "@cloudflare_secret_access_key",
