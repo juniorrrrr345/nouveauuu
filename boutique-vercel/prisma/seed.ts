@@ -5,175 +5,15 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Seeding database...');
 
-  // Créer des catégories
-  const categories = await Promise.all([
-    prisma.category.upsert({
-      where: { name: 'Légumes' },
-      update: {},
-      create: {
-        name: 'Légumes',
-        description: 'Légumes frais de saison',
-        order: 1,
-      },
-    }),
-    prisma.category.upsert({
-      where: { name: 'Fruits' },
-      update: {},
-      create: {
-        name: 'Fruits',
-        description: 'Fruits de saison, cueillis à maturité',
-        order: 2,
-      },
-    }),
-    prisma.category.upsert({
-      where: { name: 'Produits laitiers' },
-      update: {},
-      create: {
-        name: 'Produits laitiers',
-        description: 'Fromages et produits laitiers artisanaux',
-        order: 3,
-      },
-    }),
-  ]);
-
-  // Créer des fermes
-  const farms = await Promise.all([
-    prisma.farm.upsert({
-      where: { name: 'Ferme du Soleil' },
-      update: {},
-      create: {
-        name: 'Ferme du Soleil',
-        description: 'Ferme familiale depuis 3 générations, spécialisée dans les légumes bio',
-        location: 'Provence, France',
-      },
-    }),
-    prisma.farm.upsert({
-      where: { name: 'Vergers de la Vallée' },
-      update: {},
-      create: {
-        name: 'Vergers de la Vallée',
-        description: 'Producteur de fruits de qualité dans un environnement préservé',
-        location: 'Vallée du Rhône, France',
-      },
-    }),
-  ]);
-
-  // Créer des produits avec prix multiples
-  const products = [
-    {
-      name: 'Tomates cerises bio',
-      description: 'Tomates cerises cultivées sans pesticides, goût authentique',
-      categoryId: categories[0].id,
-      farmId: farms[0].id,
-      stock: 25,
-      images: JSON.stringify(['https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=400&fit=crop']),
-      videos: JSON.stringify([]),
-      prices: [
-        { label: '250g', price: 3.50, isDefault: true },
-        { label: '500g', price: 6.00, isDefault: false },
-        { label: '1kg', price: 10.00, originalPrice: 12.00, isDefault: false },
-      ],
-    },
-    {
-      name: 'Pommes Golden',
-      description: 'Pommes Golden croquantes et sucrées, parfaites pour les enfants',
-      categoryId: categories[1].id,
-      farmId: farms[1].id,
-      stock: 50,
-      images: JSON.stringify(['https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=400&fit=crop']),
-      videos: JSON.stringify([]),
-      prices: [
-        { label: '1kg', price: 4.50, isDefault: true },
-        { label: '2kg', price: 8.00, originalPrice: 9.00, isDefault: false },
-        { label: '5kg', price: 18.00, isDefault: false },
-      ],
-    },
-    {
-      name: 'Fromage de chèvre',
-      description: 'Fromage de chèvre artisanal, affiné dans nos caves',
-      categoryId: categories[2].id,
-      stock: 15,
-      images: JSON.stringify(['https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400&h=400&fit=crop']),
-      videos: JSON.stringify([]),
-      prices: [
-        { label: '200g', price: 8.50, isDefault: true },
-        { label: '400g', price: 15.00, isDefault: false },
-      ],
-    },
-    {
-      name: 'Courgettes bio',
-      description: 'Courgettes biologiques, fraîchement récoltées',
-      categoryId: categories[0].id,
-      farmId: farms[0].id,
-      stock: 30,
-      images: JSON.stringify(['https://images.unsplash.com/photo-1591958911259-bee2173bdab6?w=400&h=400&fit=crop']),
-      videos: JSON.stringify([]),
-      prices: [
-        { label: '500g', price: 2.50, isDefault: true },
-        { label: '1kg', price: 4.50, isDefault: false },
-      ],
-    },
-  ];
-
-  for (const productData of products) {
-    const { prices, ...product } = productData;
-    
-    const createdProduct = await prisma.product.upsert({
-      where: { name: product.name },
-      update: {},
-      create: product,
-    });
-
-    // Créer les prix
-    for (const price of prices) {
-      await prisma.productPrice.upsert({
-        where: { 
-          productId_label: {
-            productId: createdProduct.id,
-            label: price.label,
-          }
-        },
-        update: {},
-        create: {
-          ...price,
-          productId: createdProduct.id,
-        },
-      });
-    }
-  }
-
-  // Créer des réseaux sociaux de démonstration
-  await prisma.socialMedia.upsert({
-    where: { platform: 'facebook' },
-    update: {},
-    create: {
-      platform: 'facebook',
-      name: 'Notre Facebook',
-      url: 'https://facebook.com/boutique',
-      order: 1,
-    },
-  });
-
-  await prisma.socialMedia.upsert({
-    where: { platform: 'instagram' },
-    update: {},
-    create: {
-      platform: 'instagram',
-      name: 'Instagram',
-      url: 'https://instagram.com/boutique',
-      order: 2,
-    },
-  });
-
-  // Configuration du site
+  // Create default site configuration
   await prisma.siteConfig.upsert({
     where: { key: 'site_name' },
     update: {},
     create: {
       key: 'site_name',
-      value: 'Boutique Fresh',
-      type: 'text',
-    },
+      value: 'Boutique Fraîche',
+      type: 'text'
+    }
   });
 
   await prisma.siteConfig.upsert({
@@ -181,23 +21,260 @@ async function main() {
     update: {},
     create: {
       key: 'site_description',
-      value: 'Découvrez nos produits frais de qualité, directement de nos fermes partenaires',
-      type: 'text',
-    },
+      value: 'Boutique de produits frais directement de nos fermes partenaires',
+      type: 'text'
+    }
   });
 
   await prisma.siteConfig.upsert({
-    where: { key: 'promotion_images' },
+    where: { key: 'site_logo' },
     update: {},
     create: {
-      key: 'promotion_images',
-      value: JSON.stringify([
-        'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&h=400&fit=crop',
-        'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800&h=400&fit=crop',
-        'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&h=400&fit=crop',
-      ]),
-      type: 'json',
-    },
+      key: 'site_logo',
+      value: '/logo.svg',
+      type: 'text'
+    }
+  });
+
+  await prisma.siteConfig.upsert({
+    where: { key: 'address' },
+    update: {},
+    create: {
+      key: 'address',
+      value: '123 Rue de la Ferme, 75000 Paris',
+      type: 'text'
+    }
+  });
+
+  await prisma.siteConfig.upsert({
+    where: { key: 'phone' },
+    update: {},
+    create: {
+      key: 'phone',
+      value: '+33 1 23 45 67 89',
+      type: 'text'
+    }
+  });
+
+  await prisma.siteConfig.upsert({
+    where: { key: 'email' },
+    update: {},
+    create: {
+      key: 'email',
+      value: 'contact@boutique-fraiche.fr',
+      type: 'text'
+    }
+  });
+
+  await prisma.siteConfig.upsert({
+    where: { key: 'schedule' },
+    update: {},
+    create: {
+      key: 'schedule',
+      value: 'Lun-Ven: 9h-18h, Sam: 9h-17h',
+      type: 'text'
+    }
+  });
+
+  // Create default categories
+  const category1 = await prisma.category.upsert({
+    where: { name: 'Légumes' },
+    update: {},
+    create: {
+      name: 'Légumes',
+      isActive: true
+    }
+  });
+
+  const category2 = await prisma.category.upsert({
+    where: { name: 'Fruits' },
+    update: {},
+    create: {
+      name: 'Fruits',
+      isActive: true
+    }
+  });
+
+  const category3 = await prisma.category.upsert({
+    where: { name: 'Produits Laitiers' },
+    update: {},
+    create: {
+      name: 'Produits Laitiers',
+      isActive: true
+    }
+  });
+
+  // Create default farms
+  const farm1 = await prisma.farm.upsert({
+    where: { name: 'Ferme du Soleil' },
+    update: {},
+    create: {
+      name: 'Ferme du Soleil',
+      isActive: true
+    }
+  });
+
+  const farm2 = await prisma.farm.upsert({
+    where: { name: 'Ferme BioNature' },
+    update: {},
+    create: {
+      name: 'Ferme BioNature',
+      isActive: true
+    }
+  });
+
+  // Create example products
+  const product1 = await prisma.product.upsert({
+    where: { id: 'tomatoes-example' },
+    update: {},
+    create: {
+      id: 'tomatoes-example',
+      name: 'Tomates Cerises Bio',
+      description: 'Tomates cerises fraîches et juteuses, cultivées sans pesticides',
+      images: JSON.stringify(['/images/tomatoes.jpg']),
+      videos: JSON.stringify([]),
+      categoryId: category1.id,
+      farmId: farm1.id,
+      isActive: true
+    }
+  });
+
+  const product2 = await prisma.product.upsert({
+    where: { id: 'carrots-example' },
+    update: {},
+    create: {
+      id: 'carrots-example',
+      name: 'Carottes Bio',
+      description: 'Carottes croquantes et sucrées, parfaites pour vos salades',
+      images: JSON.stringify(['/images/carrots.jpg']),
+      videos: JSON.stringify([]),
+      categoryId: category1.id,
+      farmId: farm1.id,
+      isActive: true
+    }
+  });
+
+  const product3 = await prisma.product.upsert({
+    where: { id: 'apples-example' },
+    update: {},
+    create: {
+      id: 'apples-example',
+      name: 'Pommes Golden',
+      description: 'Pommes golden délicieuses et parfumées',
+      images: JSON.stringify(['/images/apples.jpg']),
+      videos: JSON.stringify([]),
+      categoryId: category2.id,
+      farmId: farm2.id,
+      isActive: true
+    }
+  });
+
+  const product4 = await prisma.product.upsert({
+    where: { id: 'milk-example' },
+    update: {},
+    create: {
+      id: 'milk-example',
+      name: 'Lait de Vache Bio',
+      description: 'Lait frais de vaches élevées en plein air',
+      images: JSON.stringify(['/images/milk.jpg']),
+      videos: JSON.stringify([]),
+      categoryId: category3.id,
+      farmId: farm2.id,
+      isActive: true
+    }
+  });
+
+  // Create prices for products
+  await prisma.productPrice.upsert({
+    where: { productId_label: { productId: product1.id, label: '500g' } },
+    update: {},
+    create: {
+      productId: product1.id,
+      label: '500g',
+      price: 4.50,
+      isDefault: true
+    }
+  });
+
+  await prisma.productPrice.upsert({
+    where: { productId_label: { productId: product1.id, label: '1kg' } },
+    update: {},
+    create: {
+      productId: product1.id,
+      label: '1kg',
+      price: 8.00,
+      isDefault: false
+    }
+  });
+
+  await prisma.productPrice.upsert({
+    where: { productId_label: { productId: product2.id, label: '1kg' } },
+    update: {},
+    create: {
+      productId: product2.id,
+      label: '1kg',
+      price: 3.20,
+      isDefault: true
+    }
+  });
+
+  await prisma.productPrice.upsert({
+    where: { productId_label: { productId: product3.id, label: '1kg' } },
+    update: {},
+    create: {
+      productId: product3.id,
+      label: '1kg',
+      price: 5.80,
+      isDefault: true
+    }
+  });
+
+  await prisma.productPrice.upsert({
+    where: { productId_label: { productId: product4.id, label: '1L' } },
+    update: {},
+    create: {
+      productId: product4.id,
+      label: '1L',
+      price: 2.90,
+      isDefault: true
+    }
+  });
+
+  // Create social media links
+  await prisma.socialMedia.upsert({
+    where: { id: 'whatsapp-default' },
+    update: {},
+    create: {
+      id: 'whatsapp-default',
+      platform: 'WhatsApp',
+      name: 'WhatsApp',
+      url: 'https://wa.me/33123456789',
+      isActive: true
+    }
+  });
+
+  await prisma.socialMedia.upsert({
+    where: { id: 'facebook-default' },
+    update: {},
+    create: {
+      id: 'facebook-default',
+      platform: 'Facebook',
+      name: 'Facebook',
+      url: 'https://facebook.com/boutique-fraiche',
+      isActive: true
+    }
+  });
+
+  await prisma.socialMedia.upsert({
+    where: { id: 'instagram-default' },
+    update: {},
+    create: {
+      id: 'instagram-default',
+      platform: 'Instagram',
+      name: 'Instagram',
+      url: 'https://instagram.com/boutique_fraiche',
+      isActive: true
+    }
   });
 
   console.log('✅ Database seeded successfully!');
