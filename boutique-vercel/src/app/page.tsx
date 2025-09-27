@@ -30,12 +30,12 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section avec Carrousel */}
-      <section className="bg-gradient-to-b from-green-50 to-white py-12">
+      <section className="bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-bold text-black sm:text-5xl lg:text-6xl">
               Produits Frais
-              <span className="text-green-600"> de Qualité</span>
+              <span className="text-gray-600"> de Qualité</span>
             </h1>
             <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
               Découvrez nos produits authentiques directement de nos fermes partenaires
@@ -53,7 +53,7 @@ export default function Home() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl font-bold text-black mb-4">
               Nos Produits
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
