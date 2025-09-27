@@ -11,9 +11,6 @@ export default function CategoriesPage() {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [formData, setFormData] = useState({
     name: '',
-    description: '',
-    image: '',
-    order: 0,
   });
 
   useEffect(() => {
@@ -85,9 +82,6 @@ export default function CategoriesPage() {
     setEditingCategory(category);
     setFormData({
       name: category.name,
-      description: category.description || '',
-      image: category.image || '',
-      order: category.order,
     });
     setShowModal(true);
   };
