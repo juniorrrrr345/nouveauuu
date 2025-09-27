@@ -11,9 +11,6 @@ export default function FarmPage() {
   const [editingFarm, setEditingFarm] = useState<Farm | null>(null);
   const [formData, setFormData] = useState({
     name: '',
-    description: '',
-    location: '',
-    image: '',
   });
 
   useEffect(() => {
@@ -85,45 +82,14 @@ export default function FarmPage() {
     setEditingFarm(farm);
     setFormData({
       name: farm.name,
-      description: farm.description || '',
-      location: farm.location || '',
-      image: farm.image || '',
     });
     setShowModal(true);
   };
 
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const formDataUpload = new FormData();
-    formDataUpload.append('file', file);
-    formDataUpload.append('type', 'image');
-
-    try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formDataUpload,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setFormData(prev => ({
-          ...prev,
-          image: data.url,
-        }));
-      }
-    } catch (error) {
-      console.error('Erreur lors de l\'upload:', error);
-    }
-  };
 
   const resetForm = () => {
     setFormData({
       name: '',
-      description: '',
-      location: '',
-      image: '',
     });
     setEditingFarm(null);
   };
