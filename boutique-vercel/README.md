@@ -161,3 +161,12 @@ Pour toute question ou problème :
 ---
 
 **Note :** Après le déploiement, l'application sera entièrement fonctionnelle avec des données d'exemple (produits, catégories, fermes, etc.) que vous pourrez modifier via le panel d'administration.
+
+## 🔧 Configuration Neon PostgreSQL
+
+Pour utiliser votre base de données Neon existante, ajoutez ces variables dans Vercel :
+
+```env
+DATABASE_URL="postgres://neondb_owner:npg_kLdJyg6nDR4U@ep-icy-morning-adact1c6-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"
+POSTGRES_PRISMA_URL="postgres://neondb_owner:npg_kLdJyg6nDR4U@ep-icy-morning-adact1c6-pooler.c-2.us-east-1.aws.neon.tech/neondb?connect_timeout=15&sslmode=require"
+```
