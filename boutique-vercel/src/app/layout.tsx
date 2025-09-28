@@ -10,8 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Boutique - Produits Frais de Qualité",
-  description: "Découvrez nos produits frais de qualité, directement de nos fermes partenaires",
+  title: "CALIWHITE - Boutique de Qualité Supérieure",
+  description: "Découvrez CALIWHITE, votre boutique en ligne de produits de qualité supérieure avec livraison rapide",
 };
 
 export default function RootLayout({

@@ -85,8 +85,8 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-6 text-green-400">INFO</h3>
             <div className="space-y-4">
               <div className="text-gray-300">
-                <p className="font-medium mb-2">{getConfigValue('site_name', 'Boutique')}</p>
-                <p className="text-sm">{getConfigValue('site_description', 'Découvrez nos produits frais de qualité')}</p>
+                <p className="font-medium mb-2">{getConfigValue('site_name', 'CALIWHITE')}</p>
+                <p className="text-sm">{getConfigValue('site_description', 'Boutique de qualité supérieure avec livraison express')}</p>
               </div>
             </div>
           </div>
@@ -144,7 +144,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-gray-700 mt-8 pt-6">
           <div className="text-center text-gray-400 text-sm">
-            <p>&copy; {new Date().getFullYear()} {getConfigValue('site_name', 'Boutique')}. Tous droits réservés.</p>
+            <p>&copy; {new Date().getFullYear()} {getConfigValue('site_name', 'CALIWHITE')}. Tous droits réservés.</p>
           </div>
         </div>
       </div>

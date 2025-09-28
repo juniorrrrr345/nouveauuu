@@ -52,11 +52,11 @@ export default function Header() {
                 </div>
               ) : (
                 <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">B</span>
+                  <span className="text-white font-bold text-xl">C</span>
                 </div>
               )}
               <span className="text-2xl font-bold text-black">
-                {getConfigValue('site_name', 'Boutique')}
+                {getConfigValue('site_name', 'CALIWHITE')}
               </span>
             </Link>
 

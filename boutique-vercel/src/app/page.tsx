@@ -34,11 +34,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-black sm:text-5xl lg:text-6xl">
-              Produits Frais
-              <span className="text-gray-600"> de Qualité</span>
+              CALIWHITE
+              <span className="text-gray-600"> Boutique Premium</span>
             </h1>
             <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-              Découvrez nos produits authentiques directement de nos fermes partenaires
+              Découvrez nos produits CALIWHITE de qualité supérieure avec livraison express
             </p>
           </div>
           
