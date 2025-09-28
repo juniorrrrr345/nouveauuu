@@ -97,52 +97,41 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-0 w-full z-40 bg-black/40 backdrop-blur-md safe-area-padding">
+    <header className="fixed top-0 w-full z-40 bg-white/95 backdrop-blur-xl border-b border-gray-200/50 shadow-sm safe-area-padding">
       {/* N'afficher que si les données sont chargées */}
       {isLoaded && settings && (
         <>
-          {/* Texte défilant SEULEMENT - depuis l'admin */}
+          {/* Texte défilant CLEAN - style moderne */}
           {settings.scrollingText && settings.scrollingText.trim() && (
-            <div className="bg-black/30 backdrop-blur-sm text-white py-0.5 overflow-hidden relative border-b border-white/10">
+            <div className="bg-blue-50 text-blue-900 py-1 overflow-hidden relative border-b border-blue-100">
               <div className="animate-marquee whitespace-nowrap inline-block">
-                <span className="text-xs font-bold tracking-wide px-4 text-white drop-shadow-md">
+                <span className="text-xs font-medium tracking-wide px-4">
                   {settings.scrollingText}
                 </span>
               </div>
             </div>
           )}
           
-          {/* PAS de bandeau contact/WhatsApp dans le header */}
-          
-          {/* Logo boutique avec bouton panier - responsive optimisé */}
-          <div className="bg-black/30 backdrop-blur-md py-2 sm:py-3 md:py-4 px-3 sm:px-4 md:px-6 text-center border-b border-white/10 relative">
-            {/* Bouton panier en position absolue */}
+          {/* Logo boutique CLEAN - style Apple */}
+          <div className="bg-white/80 backdrop-blur-xl py-3 sm:py-4 md:py-5 px-4 sm:px-6 md:px-8 text-center relative">
+            {/* Bouton panier CLEAN */}
             <button
               onClick={() => setIsOpen(true)}
-              className="absolute right-3 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-2 sm:p-3 rounded-lg transition-all duration-200 flex items-center gap-2 border border-white/30"
+              className="absolute right-4 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 bg-gray-100 hover:bg-gray-200 text-gray-800 p-2.5 sm:p-3 rounded-full transition-all duration-200 flex items-center gap-2 shadow-sm border border-gray-300/50"
             >
               <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
               {totalItems > 0 && (
-                <span className="bg-green-500 text-black text-xs font-bold rounded-full min-w-[20px] h-5 px-1 flex items-center justify-center">
+                <span className="bg-blue-600 text-white text-xs font-semibold rounded-full min-w-[20px] h-5 px-1.5 flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
             </button>
             
             <div className="flex flex-col items-center justify-center">
-              {settings.backgroundImage ? (
-                <img 
-                  src={settings.backgroundImage} 
-                  alt={settings.shopTitle || 'CALIWHITE'} 
-                  className="h-12 sm:h-16 md:h-20 w-auto rounded-lg"
-                  style={{ filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' }}
-                />
-              ) : (
-                <h1 className={getTitleClass()}>
-                  {settings.shopTitle || 'CALIWHITE'}
-                </h1>
-              )}
-
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 tracking-tight">
+                {settings.shopTitle || 'CALIWHITE'}
+              </h1>
+              <div className="w-12 h-0.5 bg-blue-600 mt-2 rounded-full"></div>
             </div>
           </div>
         </>

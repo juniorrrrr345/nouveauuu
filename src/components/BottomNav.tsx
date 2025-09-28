@@ -75,17 +75,17 @@ export default function BottomNav() {
 
   return (
     <nav 
-      className="bottom-nav-container bg-black/80 backdrop-blur-sm border-t border-white/10 safe-area-padding"
+      className="bottom-nav-container bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-lg safe-area-padding"
     >
-      <div className="flex items-center justify-around py-1.5 sm:py-2 px-2 sm:px-4">
+      <div className="flex items-center justify-around py-2 sm:py-3 px-3 sm:px-4">
         {navItems.map((item) => (
           <button
             key={item.id}
             onClick={() => handleTabClick(item.id)}
-            className={`flex flex-col items-center justify-center py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg transition-all duration-200 touch-manipulation min-w-0 flex-1 max-w-[80px] ${
+            className={`flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-200 touch-manipulation min-w-0 flex-1 max-w-[80px] ${
               activeTab === item.id
-                ? 'text-white bg-white/10 border border-white/20'
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                ? 'text-blue-600 bg-blue-50 border border-blue-100 shadow-sm'
+                : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
             }`}
             style={{ 
               touchAction: 'manipulation',
@@ -99,7 +99,7 @@ export default function BottomNav() {
             }`}>
               {item.icon}
             </div>
-            <span className="text-xxs sm:text-xs font-medium mt-0.5 sm:mt-1 tracking-wide truncate w-full text-center">
+            <span className="text-xs font-semibold mt-1 tracking-wide truncate w-full text-center">
               {item.label}
             </span>
           </button>

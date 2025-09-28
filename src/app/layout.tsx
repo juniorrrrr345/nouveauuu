@@ -9,11 +9,11 @@ import { Toaster } from 'react-hot-toast'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'CALIWHITE - Boutique en ligne',
-  description: 'CALIWHITE - Votre boutique en ligne. Produits de qualité et livraison rapide.',
+  title: 'CALIWHITE - Boutique Premium',
+  description: 'CALIWHITE - Boutique premium moderne. Produits de qualité supérieure avec design épuré.',
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'black-translucent',
+    statusBarStyle: 'default',
     title: 'CALIWHITE'
   },
   formatDetection: {
@@ -25,7 +25,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#000000'
+  themeColor: '#ffffff'
 }
 
 export default function RootLayout({
@@ -152,9 +152,9 @@ export default function RootLayout({
                     })
                     .catch(e => console.error('Erreur chargement fond API:', e));
                   
-                  // Fond noir par défaut en attendant
-                  document.documentElement.style.backgroundColor = 'black';
-                  document.body.style.backgroundColor = 'black';
+                  // Fond blanc clean par défaut en attendant
+                  document.documentElement.style.backgroundColor = '#fafafa';
+                  document.body.style.backgroundColor = '#fafafa';
                 } catch (e) {
                   console.error('Erreur fond d\\'image:', e);
                 }
@@ -163,7 +163,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} antialiased`} suppressHydrationWarning style={{ backgroundColor: 'black' }}>
+      <body className={`${inter.className} antialiased`} suppressHydrationWarning style={{ backgroundColor: '#fafafa' }}>
         <GlobalBackgroundProvider />
         <CachePreloader />
         <Toaster 

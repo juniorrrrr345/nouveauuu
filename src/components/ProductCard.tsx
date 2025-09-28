@@ -27,54 +27,61 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
   return (
     <div 
       onClick={() => onClick(product)}
-      className="bg-black/60 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer group touch-manipulation w-full"
+      className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group touch-manipulation w-full"
     >
       {/* Container image avec badge */}
-      <div className="relative aspect-square overflow-hidden">
+      <div className="relative aspect-square overflow-hidden bg-gray-50">
         {product.image_url ? (
           <img
             src={product.image_url}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
             <div className="text-gray-400 text-4xl">📷</div>
           </div>
         )}
         
-        {/* Badge catégorie - responsive */}
-        <div className="absolute top-2 left-2 bg-white text-black text-xxs sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md shadow-lg max-w-[80%] truncate">
+        {/* Badge catégorie CLEAN */}
+        <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
           {product.category}
         </div>
         
-        {/* Indicateur vidéo - responsive */}
+        {/* Indicateur vidéo CLEAN */}
         {product.video_url && (
-          <div className="absolute top-2 right-2 bg-black/80 text-white p-1 sm:p-1.5 rounded-full shadow-lg">
-            <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M2 6a2 2 0 012-2h6l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+          <div className="absolute top-3 right-3 bg-white/90 text-blue-600 p-2 rounded-full shadow-lg backdrop-blur-sm">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M8 5v10l8-5-8-5z" />
             </svg>
           </div>
         )}
         
-        {/* Overlay gradient au survol */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* Overlay subtil au survol */}
+        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
       
-      {/* Informations produit - responsive */}
-      <div className="p-2 sm:p-3 md:p-4">
-        <h3 className="text-white font-bold text-responsive-xs sm:text-responsive-sm mb-1 uppercase tracking-wide leading-tight break-words line-clamp-2">
+      {/* Informations produit CLEAN */}
+      <div className="p-4 sm:p-5">
+        <h3 className="text-gray-900 font-bold text-sm sm:text-base mb-2 leading-tight line-clamp-2">
           {product.name}
         </h3>
-        <p className="text-gray-400 text-xxs sm:text-xs font-medium uppercase tracking-widest break-words line-clamp-1">
+        <p className="text-blue-600 text-xs sm:text-sm font-medium mb-2 line-clamp-1">
           {product.farm}
         </p>
         {/* Description du produit */}
         {product.description && (
-          <p className="text-gray-300 text-xxs sm:text-xs mt-2 line-clamp-2 leading-relaxed">
+          <p className="text-gray-600 text-xs sm:text-sm line-clamp-2 leading-relaxed">
             {product.description}
           </p>
         )}
+        
+        {/* Bouton d'action Clean */}
+        <div className="mt-4 pt-3 border-t border-gray-100">
+          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl transition-colors duration-200 text-sm">
+            Voir les détails
+          </button>
+        </div>
       </div>
     </div>
   );

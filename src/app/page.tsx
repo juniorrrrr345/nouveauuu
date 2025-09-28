@@ -238,50 +238,44 @@ export default function HomePage() {
     }
   };
 
-  // Écran de chargement avec fond de thème de la boutique
+  // Écran de chargement CLEAN - Style moderne
   if (loading) {
     return (
       <div className="main-container loading-container">
         <div className="global-overlay"></div>
         <div className="content-layer">
           <div className="min-h-screen loading-screen flex items-center justify-center p-4">
-            <div className="text-center bg-black/60 backdrop-blur-md rounded-3xl p-8 sm:p-12 max-w-lg mx-auto border border-white/20">
+            <div className="text-center bg-white/90 backdrop-blur-sm rounded-2xl p-8 sm:p-12 max-w-lg mx-auto shadow-xl border border-gray-200">
 
-              
-              {/* Logo carré = image de fond de la boutique */}
+              {/* Logo Clean - Simple et élégant */}
               <div className="mb-8">
-                <img 
-                  src={settings?.backgroundImage || "https://pub-b38679a01a274648827751df94818418.r2.dev/images/background-oglegacy.jpeg"}
-                  alt="CALIWHITE" 
-                  className="h-32 sm:h-40 md:h-48 w-32 sm:w-40 md:w-48 mx-auto rounded-xl object-cover border-4 border-white/20"
-                  style={{ filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))' }}
-                />
-              </div>
-              
-              <p className="text-2xl text-white mb-8 font-semibold drop-shadow-lg animate-pulse">
-                CALIWHITE
-              </p>
-              
-              {/* Nouvelle barre de chargement style néon */}
-              <div className="w-80 max-w-full mx-auto mb-8">
-                <div className="h-4 bg-black/50 rounded-full overflow-hidden border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.5)]">
-                  <div className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full shadow-lg animate-loading-bar relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
-                  </div>
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg">
+                  <span className="text-white font-black text-2xl sm:text-3xl">C</span>
                 </div>
-                <div className="mt-2 text-sm text-blue-300 font-medium drop-shadow-md animate-pulse">Chargement de CALIWHITE...</div>
               </div>
               
-              {/* Animation de particules style diamant */}
-              <div className="flex justify-center gap-3 mb-8">
-                <div className="w-3 h-3 bg-blue-400 rounded-full animate-bounce shadow-[0_0_10px_rgba(96,165,250,0.8)]" style={{ animationDelay: '0ms' }}></div>
-                <div className="w-3 h-3 bg-purple-500 rounded-full animate-bounce shadow-[0_0_10px_rgba(168,85,247,0.8)]" style={{ animationDelay: '200ms' }}></div>
-                <div className="w-3 h-3 bg-pink-500 rounded-full animate-bounce shadow-[0_0_10px_rgba(236,72,153,0.8)]" style={{ animationDelay: '400ms' }}></div>
+              <h2 className="text-2xl sm:text-3xl text-gray-900 mb-8 font-black tracking-tight">
+                CALIWHITE
+              </h2>
+              
+              {/* Barre de chargement CLEAN */}
+              <div className="w-full max-w-sm mx-auto mb-8">
+                <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-blue-600 to-blue-700 rounded-full animate-loading-bar"></div>
+                </div>
+                <div className="mt-3 text-sm text-gray-600 font-medium">Chargement...</div>
               </div>
               
-              {/* Footer */}
-              <div className="text-white text-sm font-medium drop-shadow-md">
-                <p>CALIWHITE</p>
+              {/* Points de chargement Clean */}
+              <div className="flex justify-center gap-2 mb-8">
+                <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              </div>
+              
+              {/* Footer Clean */}
+              <div className="text-gray-500 text-sm font-medium">
+                <p>Boutique Premium</p>
               </div>
             </div>
           </div>
@@ -322,17 +316,31 @@ export default function HomePage() {
                   onFarmChange={setSelectedFarm}
                 />
                 
-                <main className="pt-3 pb-24 sm:pb-28 px-3 sm:px-4 lg:px-6 xl:px-8 max-w-7xl mx-auto">
+                <main className="pt-6 pb-24 sm:pb-28 px-4 sm:px-6 lg:px-8 xl:px-12 max-w-7xl mx-auto">
+                
+                {/* Hero Section Clean */}
+                <div className="text-center py-8 sm:py-12 mb-8">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
+                    Découvrez CALIWHITE
+                  </h1>
+                  <p className="text-lg text-gray-600 max-w-2xl mx-auto font-medium">
+                    Produits de qualité supérieure avec livraison express
+                  </p>
+                </div>
 
-                {/* Affichage des produits */}
+                {/* Affichage des produits CLEAN */}
                 {filteredProducts.length === 0 && products.length > 0 ? (
-                  <div className="text-center py-8 sm:py-12">
-                    <p className="text-white/60 text-base sm:text-lg">
+                  <div className="text-center py-12 sm:py-16">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                      <span className="text-2xl">🔍</span>
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucun produit trouvé</h3>
+                    <p className="text-gray-600">
                       Aucun produit ne correspond à vos critères de recherche
                     </p>
                   </div>
                 ) : filteredProducts.length > 0 ? (
-                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
                     {filteredProducts.map((product) => (
                       <ProductCard
                         key={product._id}
@@ -341,7 +349,17 @@ export default function HomePage() {
                       />
                     ))}
                   </div>
-                ) : null}
+                ) : (
+                  <div className="text-center py-16 sm:py-20">
+                    <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
+                      <span className="text-3xl">🛍️</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">Boutique en préparation</h3>
+                    <p className="text-gray-600 max-w-md mx-auto">
+                      Nos produits seront bientôt disponibles. Revenez prochainement !
+                    </p>
+                  </div>
+                )}
                 </main>
               </div>
             )}
