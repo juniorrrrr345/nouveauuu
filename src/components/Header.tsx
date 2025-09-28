@@ -19,38 +19,89 @@ export default function Header() {
   const [settings, setSettings] = useState(null); // null = pas encore chargé
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Charger les settings depuis l'API Cloudflare
+  // Charger les settings depuis l'API Cloudflare ET écouter les changements admin
   useEffect(() => {
     const loadSettings = async () => {
       try {
-        const response = await fetch('/api/cloudflare/settings');
-        if (response.ok) {
-          const data = await response.json();
-          console.log('📝 Header - Settings chargés:', data);
-          
+        // 1. Essayer localStorage d'abord (plus rapide)
+        const cached = localStorage.getItem('shopSettings');
+        if (cached) {
+          const cachedData = JSON.parse(cached);
           setSettings({
-            shopTitle: data.shopName || data.shop_name || 'CALIWHITE',
-            shopSubtitle: '', // Pas de sous-titre
-            scrollingText: data.scrollingText || data.scrolling_text || '',
-            bannerText: '', // Pas de bandeau contact dans header
-            titleStyle: data.titleStyle || data.theme_color || 'glow',
-            backgroundImage: data.backgroundImage || data.background_image || ''
+            shopTitle: cachedData.shopTitle || cachedData.shopName || 'CALIWHITE',
+            shopSubtitle: '',
+            scrollingText: cachedData.scrollingText || cachedData.scrolling_text || '',
+            bannerText: '',
+            titleStyle: cachedData.titleStyle || cachedData.theme_color || 'glow',
+            backgroundImage: cachedData.backgroundImage || cachedData.background_image || ''
           });
           setIsLoaded(true);
+          console.log('🚀 Header - Settings depuis localStorage:', cachedData.shopTitle);
+        }
+        
+        // 2. Puis charger depuis l'API
+        const response = await fetch('/api/cloudflare/settings', { cache: 'no-store' });
+        if (response.ok) {
+          const data = await response.json();
+          console.log('📝 Header - Settings depuis API:', data);
+          
+          const newSettings = {
+            shopTitle: data.shopName || data.shopTitle || 'CALIWHITE',
+            shopSubtitle: '',
+            scrollingText: data.scrollingText || data.scrolling_text || '',
+            bannerText: '',
+            titleStyle: data.titleStyle || data.theme_color || 'glow',
+            backgroundImage: data.backgroundImage || data.background_image || ''
+          };
+          
+          setSettings(newSettings);
+          setIsLoaded(true);
+          
+          // Sauvegarder pour la prochaine fois
+          localStorage.setItem('shopSettings', JSON.stringify(data));
         }
       } catch (error) {
         console.error('Erreur chargement settings Header:', error);
+        
+        // Fallback minimal
+        setSettings({
+          shopTitle: 'CALIWHITE',
+          shopSubtitle: '',
+          scrollingText: '',
+          bannerText: '',
+          titleStyle: 'glow',
+          backgroundImage: ''
+        });
+        setIsLoaded(true);
       }
     };
 
     loadSettings();
     
-    // Vider seulement le cache problématique
-    localStorage.removeItem('adminSettings');
+    // Écouter les mises à jour depuis le panel admin
+    const handleSettingsUpdate = (event: CustomEvent) => {
+      console.log('🔄 Header - Settings mis à jour depuis admin:', event.detail);
+      const newData = event.detail;
+      
+      setSettings({
+        shopTitle: newData.shopTitle || newData.shopName || 'CALIWHITE',
+        shopSubtitle: '',
+        scrollingText: newData.scrollingText || newData.scrolling_text || '',
+        bannerText: '',
+        titleStyle: newData.titleStyle || newData.theme_color || 'glow',
+        backgroundImage: newData.backgroundImage || newData.background_image || ''
+      });
+    };
+    
+    window.addEventListener('settingsUpdated', handleSettingsUpdate as EventListener);
     
     // Recharger périodiquement pour synchronisation
-    const interval = setInterval(loadSettings, 5000);
-    return () => clearInterval(interval);
+    const interval = setInterval(loadSettings, 10000); // Toutes les 10s
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('settingsUpdated', handleSettingsUpdate as EventListener);
+    };
   }, []);
 
   useEffect(() => {
@@ -128,9 +179,18 @@ export default function Header() {
             </button>
             
             <div className="flex flex-col items-center justify-center">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 tracking-tight">
-                {settings.shopTitle || 'CALIWHITE'}
-              </h1>
+              {/* Logo ou texte selon les settings admin */}
+              {settings.backgroundImage ? (
+                <img 
+                  src={settings.backgroundImage} 
+                  alt={settings.shopTitle || settings.shopName || 'CALIWHITE'} 
+                  className="h-12 sm:h-14 md:h-16 w-auto rounded-lg shadow-sm border border-gray-200"
+                />
+              ) : (
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 tracking-tight">
+                  {settings.shopTitle || settings.shopName || 'CALIWHITE'}
+                </h1>
+              )}
               <div className="w-12 h-0.5 bg-blue-600 mt-2 rounded-full"></div>
             </div>
           </div>

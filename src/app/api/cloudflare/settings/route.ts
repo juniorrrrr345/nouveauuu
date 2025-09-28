@@ -31,7 +31,15 @@ export async function GET() {
   try {
     console.log('🔍 GET settings CALIWHITE...');
     
-    // Retourner directement des settings par défaut pour éviter les erreurs D1
+    // Récupérer les settings sauvegardés depuis le cache global
+    const savedSettings = global.caliwhiteSettings;
+    
+    if (savedSettings) {
+      console.log('✅ Settings CALIWHITE récupérés depuis cache:', savedSettings.shopTitle);
+      return NextResponse.json(savedSettings);
+    }
+    
+    // Sinon retourner des settings par défaut
     const defaultSettings = {
       id: 1,
       shopName: 'CALIWHITE',
@@ -56,7 +64,10 @@ export async function GET() {
       whatsapp_link: ''
     };
     
-    console.log('✅ Settings CALIWHITE par défaut');
+    // Sauvegarder les paramètres par défaut dans le cache
+    global.caliwhiteSettings = defaultSettings;
+    
+    console.log('✅ Settings CALIWHITE par défaut initialisés');
     return NextResponse.json(defaultSettings);
   } catch (error) {
     console.error('❌ Erreur GET settings CALIWHITE:', error);
@@ -65,7 +76,9 @@ export async function GET() {
     return NextResponse.json({
       id: 1,
       shopName: 'CALIWHITE',
-      shopTitle: 'CALIWHITE'
+      shopTitle: 'CALIWHITE',
+      backgroundImage: '',
+      scrollingText: ''
     });
   }
 }
@@ -81,38 +94,54 @@ export async function PUT(request: NextRequest) {
     console.log('🔧 PUT settings CALIWHITE...');
     const body = await request.json();
     
-    console.log('✅ Settings CALIWHITE sauvegardés (simulation):', body);
+    console.log('📝 Données reçues:', body);
     
-    // Retourner directement un succès pour éviter les erreurs D1
-    const responseSettings = {
-      success: true,
-      data: {
-        id: 1,
-        shopName: body.shopTitle || body.shop_title || 'CALIWHITE',
-        shopTitle: body.shopTitle || body.shop_title || 'CALIWHITE',
-        backgroundImage: body.backgroundImage || body.background_image || '',
-        background_image: body.backgroundImage || body.background_image || '',
-        backgroundOpacity: body.backgroundOpacity || body.background_opacity || 20,
-        background_opacity: body.backgroundOpacity || body.background_opacity || 20,
-        backgroundBlur: body.backgroundBlur || body.background_blur || 5,
-        background_blur: body.backgroundBlur || body.background_blur || 5,
-        scrollingText: body.scrollingText || body.scrolling_text || '',
-        scrolling_text: body.scrollingText || body.scrolling_text || '',
-        titleStyle: body.titleStyle || body.theme_color || 'glow',
-        theme_color: body.titleStyle || body.theme_color || 'glow'
-      }
+    // Sauvegarder les settings dans le localStorage du serveur (simulation persistante)
+    const settingsToSave = {
+      id: 1,
+      shopName: body.shopTitle || body.shop_title || 'CALIWHITE',
+      shopTitle: body.shopTitle || body.shop_title || 'CALIWHITE',
+      backgroundImage: body.backgroundImage || body.background_image || '',
+      background_image: body.backgroundImage || body.background_image || '',
+      backgroundOpacity: body.backgroundOpacity || body.background_opacity || 20,
+      background_opacity: body.backgroundOpacity || body.background_opacity || 20,
+      backgroundBlur: body.backgroundBlur || body.background_blur || 5,
+      background_blur: body.backgroundBlur || body.background_blur || 5,
+      scrollingText: body.scrollingText || body.scrolling_text || '',
+      scrolling_text: body.scrollingText || body.scrolling_text || '',
+      titleStyle: body.titleStyle || body.theme_color || 'glow',
+      theme_color: body.titleStyle || body.theme_color || 'glow',
+      whatsappLink: body.whatsappLink || body.whatsapp_link || '',
+      whatsapp_link: body.whatsappLink || body.whatsapp_link || '',
+      whatsappNumber: body.whatsappNumber || body.whatsapp_number || '',
+      whatsapp_number: body.whatsappNumber || body.whatsapp_number || '',
+      infoContent: body.infoContent || body.info_content || 'Bienvenue chez CALIWHITE',
+      info_content: body.infoContent || body.info_content || 'Bienvenue chez CALIWHITE',
+      contactContent: body.contactContent || body.contact_content || 'Contactez CALIWHITE',
+      contact_content: body.contactContent || body.contact_content || 'Contactez CALIWHITE',
+      updatedAt: new Date().toISOString()
     };
+    
+    // Utiliser un système de cache global pour persister les settings
+    global.caliwhiteSettings = settingsToSave;
+    
+    console.log('✅ Settings CALIWHITE sauvegardés:', settingsToSave.shopTitle);
 
-    return NextResponse.json(responseSettings);
+    return NextResponse.json({
+      success: true,
+      data: settingsToSave
+    });
   } catch (error) {
     console.error('❌ Erreur PUT settings CALIWHITE:', error);
     
-    // Fallback absolu
+    // Fallback avec données de base
     return NextResponse.json({
       success: true,
       data: {
         shopName: 'CALIWHITE',
-        shopTitle: 'CALIWHITE'
+        shopTitle: 'CALIWHITE',
+        backgroundImage: '',
+        scrollingText: ''
       }
     });
   }

@@ -27,14 +27,16 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true); // Toujours true au départ
   const [settings, setSettings] = useState<any>(null);
 
-  // Charger les settings immédiatement pour l'image de chargement
+  // Charger les settings immédiatement ET écouter les changements admin
   useEffect(() => {
     const loadSettings = async () => {
       try {
         // Essayer d'abord le localStorage
         const cached = localStorage.getItem('shopSettings');
         if (cached) {
-          setSettings(JSON.parse(cached));
+          const cachedData = JSON.parse(cached);
+          setSettings(cachedData);
+          console.log('🚀 Page - Settings depuis localStorage:', cachedData.shopTitle);
         }
         
         // Puis charger depuis l'API
@@ -43,13 +45,30 @@ export default function HomePage() {
           const settingsData = await settingsRes.json();
           setSettings(settingsData);
           localStorage.setItem('shopSettings', JSON.stringify(settingsData));
+          console.log('📝 Page - Settings depuis API:', settingsData.shopTitle);
         }
       } catch (error) {
         console.error('Erreur chargement settings:', error);
+        setSettings({ shopTitle: 'CALIWHITE', shopName: 'CALIWHITE' });
       }
     };
     
     loadSettings();
+    
+    // Écouter les mises à jour depuis le panel admin
+    const handleSettingsUpdate = (event: CustomEvent) => {
+      console.log('🔄 Page - Settings mis à jour depuis admin:', event.detail);
+      setSettings(event.detail);
+      
+      // Recharger immédiatement les données
+      loadAllData();
+    };
+    
+    window.addEventListener('settingsUpdated', handleSettingsUpdate as EventListener);
+    
+    return () => {
+      window.removeEventListener('settingsUpdated', handleSettingsUpdate as EventListener);
+    };
   }, []);
   
   // Gérer la logique de première visite côté client uniquement
@@ -247,15 +266,25 @@ export default function HomePage() {
           <div className="min-h-screen loading-screen flex items-center justify-center p-4">
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-2xl p-8 sm:p-12 max-w-lg mx-auto shadow-xl border border-gray-200">
 
-              {/* Logo Clean - Simple et élégant */}
+              {/* Logo Clean - Utilise backgroundImage du panel admin ou défaut */}
               <div className="mb-8">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg">
-                  <span className="text-white font-black text-2xl sm:text-3xl">C</span>
-                </div>
+                {settings?.backgroundImage ? (
+                  <img 
+                    src={settings.backgroundImage} 
+                    alt={settings.shopTitle || settings.shopName || 'CALIWHITE'} 
+                    className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-2xl object-cover shadow-lg border-2 border-gray-200"
+                  />
+                ) : (
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg">
+                    <span className="text-white font-black text-2xl sm:text-3xl">
+                      {(settings?.shopTitle || settings?.shopName || 'CALIWHITE').charAt(0)}
+                    </span>
+                  </div>
+                )}
               </div>
               
               <h2 className="text-2xl sm:text-3xl text-gray-900 mb-8 font-black tracking-tight">
-                CALIWHITE
+                {settings?.shopTitle || settings?.shopName || 'CALIWHITE'}
               </h2>
               
               {/* Barre de chargement CLEAN */}

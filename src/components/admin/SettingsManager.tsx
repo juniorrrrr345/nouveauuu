@@ -98,22 +98,25 @@ export default function SettingsManager() {
         try {
           localStorage.setItem('shopSettings', JSON.stringify(settings));
           window.dispatchEvent(new CustomEvent('settingsUpdated', { detail: settings }));
+          console.log('📤 Event settingsUpdated dispatché');
         } catch (storageError) {
           console.warn('Erreur localStorage:', storageError);
         }
         
-        // Recharger les données en arrière-plan (optionnel)
-        setTimeout(async () => {
-          try {
-            const refreshResponse = await fetch('/api/cloudflare/settings');
-            if (refreshResponse.ok) {
-              const refreshedData = await refreshResponse.json();
-              console.log('🔄 Données rechargées:', refreshedData);
-            }
-          } catch (error) {
-            console.warn('Erreur rechargement:', error);
-          }
+        // Forcer le refresh de la boutique
+        try {
+          await fetch('/api/admin/refresh', { method: 'POST' });
+          console.log('🔄 Refresh boutique déclenché');
+        } catch (refreshError) {
+          console.warn('Erreur refresh:', refreshError);
+        }
+        
+        // Message pour indiquer que la boutique va se mettre à jour
+        setTimeout(() => {
+          setMessage('🎉 Paramètres appliqués ! Visitez la boutique pour voir les changements');
         }, 1000);
+        
+        setTimeout(() => setMessage(''), 8000);
         
       } else {
         const errorText = await response.text();
