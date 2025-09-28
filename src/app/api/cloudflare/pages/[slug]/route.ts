@@ -97,7 +97,7 @@ export async function PUT(
     } else {
       // INSERT
       await executeSqlOnD1(
-        'INSERT INTO pages (slug, title, content, is_published) VALUES (?, ?, ?, ?)',
+        'INSERT INTO pages (slug, title, content, is_active) VALUES (?, ?, ?, ?)',
         [params.slug, title, content, 1]
       );
     }
