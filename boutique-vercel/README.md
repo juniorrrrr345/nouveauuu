@@ -53,6 +53,20 @@ src/
 
 ### 🔐 Variables d'environnement
 
+```bash
+# Cloudflare D1 Database
+CLOUDFLARE_ACCOUNT_ID=7979421604bd07b3bd34d3ed96222512
+CLOUDFLARE_DATABASE_ID=62ac2c0e-3422-4f4d-b51d-33008728c3e6
+CLOUDFLARE_API_TOKEN=ijkVhaXCw6LSddIMIMxwPL5CDAWznxip5x9I1bNW
+
+# Cloudflare R2 Storage
+CLOUDFLARE_R2_BUCKET_NAME=news
+CLOUDFLARE_R2_PUBLIC_URL=https://pub-b38679a01a274648827751df94818418.r2.dev
+
+# Admin Panel
+ADMIN_PASSWORD=votre_nouveau_mot_de_passe
+```
+
 Voir `.env.example` pour la configuration complète.
 
 ### 📞 Support
