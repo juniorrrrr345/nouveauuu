@@ -4,7 +4,7 @@ export async function GET() {
   try {
     // Utiliser les valeurs hardcodées pour éviter les problèmes d'env
     const ACCOUNT_ID = '7979421604bd07b3bd34d3ed96222512';
-    const DATABASE_ID = '2cacfef4-aa3b-4150-96b8-7bfaad45717a';
+    const DATABASE_ID = '62ac2c0e-3422-4f4d-b51d-33008728c3e6';
     const API_TOKEN = 'ijkVhaXCw6LSddIMIMxwPL5CDAWznxip5x9I1bNW';
     
     const baseUrl = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/d1/database/${DATABASE_ID}/query`;
