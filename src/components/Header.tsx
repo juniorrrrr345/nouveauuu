@@ -29,7 +29,7 @@ export default function Header() {
           console.log('📝 Header - Settings chargés:', data);
           
           setSettings({
-            shopTitle: data.shopName || data.shop_name || 'MEXICAIN',
+            shopTitle: data.shopName || data.shop_name || 'CALIWHITE',
             shopSubtitle: '', // Pas de sous-titre
             scrollingText: data.scrollingText || data.scrolling_text || '',
             bannerText: '', // Pas de bandeau contact dans header
@@ -133,13 +133,13 @@ export default function Header() {
               {settings.backgroundImage ? (
                 <img 
                   src={settings.backgroundImage} 
-                  alt={settings.shopTitle || 'MEXICAIN'} 
+                  alt={settings.shopTitle || 'CALIWHITE'} 
                   className="h-12 sm:h-16 md:h-20 w-auto rounded-lg"
                   style={{ filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' }}
                 />
               ) : (
                 <h1 className={getTitleClass()}>
-                  {settings.shopTitle || 'MEXICAIN'}
+                  {settings.shopTitle || 'CALIWHITE'}
                 </h1>
               )}
 

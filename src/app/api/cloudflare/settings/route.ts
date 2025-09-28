@@ -29,13 +29,13 @@ async function executeSqlOnD1(sql: string, params: any[] = []) {
 // GET - Récupérer les paramètres
 export async function GET() {
   try {
-    console.log('🔍 GET settings MEXICAIN...');
+    console.log('🔍 GET settings CALIWHITE...');
     
     const result = await executeSqlOnD1('SELECT * FROM settings WHERE id = 1');
     
     if (result.result?.[0]?.results?.length) {
       const settings = result.result[0].results[0];
-      console.log('✅ Settings MEXICAIN récupérés:', settings);
+      console.log('✅ Settings CALIWHITE récupérés:', settings);
       
       // Mapper les champs D1 vers le format attendu par le frontend
       const mappedSettings = {
@@ -43,8 +43,8 @@ export async function GET() {
         backgroundImage: settings.backgroundImage,
         backgroundOpacity: settings.backgroundOpacity || 20,
         backgroundBlur: settings.backgroundBlur || 5,
-        shopTitle: settings.shopName || 'MEXICAIN',
-        shopName: settings.shopName || 'MEXICAIN',
+        shopTitle: settings.shopName || 'CALIWHITE',
+        shopName: settings.shopName || 'CALIWHITE',
         infoContent: settings.shopDescription,
         contactContent: settings.contactEmail,
         whatsappLink: settings.whatsappLink || '',
@@ -55,23 +55,23 @@ export async function GET() {
       
       return NextResponse.json(mappedSettings);
     } else {
-      // Retourner des paramètres par défaut MEXICAIN
+      // Retourner des paramètres par défaut CALIWHITE
       const defaultSettings = {
         id: 1,
-        shopName: 'MEXICAIN',
+        shopName: 'CALIWHITE',
         backgroundImage: 'https://pub-b38679a01a274648827751df94818418.r2.dev/images/background-oglegacy.jpeg',
         backgroundOpacity: 20,
         backgroundBlur: 5,
-        shopDescription: 'Bienvenue chez MEXICAIN - Votre boutique premium',
-        contactEmail: 'Contactez MEXICAIN pour toute question',
+        shopDescription: 'Bienvenue chez CALIWHITE - Votre boutique premium',
+        contactEmail: 'Contactez CALIWHITE pour toute question',
         contactPhone: '',
-        shopTitle: 'MEXICAIN'
+        shopTitle: 'CALIWHITE'
       };
       
       return NextResponse.json(defaultSettings);
     }
   } catch (error) {
-    console.error('❌ Erreur GET settings MEXICAIN:', error);
+    console.error('❌ Erreur GET settings CALIWHITE:', error);
     return NextResponse.json(
       { error: 'Erreur serveur lors de la récupération des paramètres' },
       { status: 500 }
@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
 // PUT - Mettre à jour les paramètres
 export async function PUT(request: NextRequest) {
   try {
-    console.log('🔧 PUT settings MEXICAIN...');
+    console.log('🔧 PUT settings CALIWHITE...');
     const body = await request.json();
     
     const {
@@ -117,9 +117,9 @@ export async function PUT(request: NextRequest) {
     const finalBackgroundImage = background_image || backgroundImage;
     const finalBackgroundOpacity = background_opacity ?? backgroundOpacity ?? 20;
     const finalBackgroundBlur = background_blur ?? backgroundBlur ?? 5;
-    const finalInfoContent = info_content || infoContent || 'Bienvenue chez MEXICAIN';
-    const finalContactContent = contact_content || contactContent || 'Contactez MEXICAIN';
-    const finalShopTitle = shop_title || shopTitle || 'MEXICAIN';
+    const finalInfoContent = info_content || infoContent || 'Bienvenue chez CALIWHITE';
+    const finalContactContent = contact_content || contactContent || 'Contactez CALIWHITE';
+    const finalShopTitle = shop_title || shopTitle || 'CALIWHITE';
     const finalWhatsappLink = whatsapp_link || whatsappLink || '';
     const finalWhatsappNumber = whatsapp_number || whatsappNumber || '';
     const finalScrollingText = scrolling_text || scrollingText || '';
@@ -182,15 +182,15 @@ export async function PUT(request: NextRequest) {
     const result = await executeSqlOnD1('SELECT * FROM settings WHERE id = 1');
     const settings = result.result[0].results[0];
     
-    console.log('✅ Settings MEXICAIN mis à jour:', settings);
+    console.log('✅ Settings CALIWHITE mis à jour:', settings);
 
     const mappedSettings = {
       ...settings,
       backgroundImage: settings.backgroundImage,
       backgroundOpacity: settings.backgroundOpacity,
       backgroundBlur: settings.backgroundBlur,
-      shopTitle: settings.shopName || 'MEXICAIN',
-      shopName: settings.shopName || 'MEXICAIN',
+      shopTitle: settings.shopName || 'CALIWHITE',
+      shopName: settings.shopName || 'CALIWHITE',
       scrollingText: settings.scrollingText || '',
       titleStyle: settings.titleStyle || 'glow',
       whatsappLink: settings.whatsappLink || ''
@@ -198,7 +198,7 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json(mappedSettings);
   } catch (error) {
-    console.error('❌ Erreur PUT settings MEXICAIN:', error);
+    console.error('❌ Erreur PUT settings CALIWHITE:', error);
     return NextResponse.json(
       { error: 'Erreur serveur lors de la mise à jour des paramètres' },
       { status: 500 }
